@@ -1,12 +1,14 @@
-import {Chars, Dictionary, List, LZCompression} from 'ts-tooling';
+import {Chars, List, LZCompression} from 'ts-tooling';
 import {IWebSocketAction} from 'reactive-action-transport-data';
+import {EventHandler} from "pattern/events/event-handler";
 
 const RECONNECT_TIMEOUT = 500;
 
 class BackendSocket {
     private _socket: WebSocket = null;
-    private _actions: Dictionary<(payload: any, backend: BackendSocket) => void> = new Dictionary();
     private _msgCache = new List<IWebSocketAction<any>>();
+
+    MessageStream = new EventHandler<BackendSocket, IWebSocketAction<any>>(this);
 
     async Start(url: Chars): Promise<void> {
         await this.connect(url);
@@ -26,10 +28,6 @@ class BackendSocket {
         }, 20);
     }
 
-    RegisterAction<T>(type: Chars, cb: (payload: T, backend: BackendSocket) => void): void {
-        this._actions.Add(type, cb);
-    }
-
     Send(data: IWebSocketAction<any>): void {
         this._msgCache.Add(data);
     }
@@ -40,12 +38,7 @@ class BackendSocket {
                 this._socket = new WebSocket(url.Value);
                 this._socket.onmessage = (e) => {
                     const action = LZCompression.Decompress(new Chars(e.data)) as IWebSocketAction<any>;
-                    const todo = this._actions.TryGetValue(action.type.ToChars());
-                    if (!todo) {
-                        console.warn(`action not found ${action.type}`);
-                        return;
-                    }
-                    todo(action.payload, this);
+                    this.MessageStream.Invoke(action);
                 };
                 this._socket.onerror = (err) => {
                     console.error(err);
