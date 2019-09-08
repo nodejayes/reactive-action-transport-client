@@ -1,8 +1,7 @@
 import {IWebSocketAction} from 'web-socket-action';
-import {EventHandler} from 'ts-tooling';
-import {Dictionary} from "collections/dictionary";
-import {BACKEND} from "./socket";
-import {DispatchType} from "dispatch-type";
+import {Dictionary, EventHandler} from 'ts-tooling';
+import {BACKEND} from './socket';
+import {DispatchType} from 'reactive-action-transport-data';
 
 class ActionStream {
     private _stream = new EventHandler<ActionStream, IWebSocketAction<any>>(this);

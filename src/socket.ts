@@ -1,6 +1,5 @@
-import {Chars, List, LZCompression} from 'ts-tooling';
+import {Chars, EventHandler, List, LZCompression} from 'ts-tooling';
 import {IWebSocketAction} from 'reactive-action-transport-data';
-import {EventHandler} from "pattern/events/event-handler";
 
 const RECONNECT_TIMEOUT = 500;
 
