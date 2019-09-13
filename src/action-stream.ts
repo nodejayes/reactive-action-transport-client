@@ -33,7 +33,7 @@ class ActionStream {
         }
     }
 
-    hook(action: new () => IWebSocketAction<any>): EventHandler<ActionStream, IWebSocketAction<any>> {
+    hook(action: new (payload?: any) => IWebSocketAction<any>): EventHandler<ActionStream, IWebSocketAction<any>> {
         const key = new action().type.ToChars();
         if (!this._hooks.ContainsKey(key)) {
             this._hooks.Add(key, new EventHandler<ActionStream, IWebSocketAction<any>>(this));

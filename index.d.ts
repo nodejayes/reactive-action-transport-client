@@ -19,7 +19,7 @@ declare module 'action-stream' {
 	    private _hooks;
 	    constructor();
 	    dispatch(action: IWebSocketAction<any>): void;
-	    hook(action: new () => IWebSocketAction<any>): EventHandler<ActionStream, IWebSocketAction<any>>;
+	    hook(action: new (payload?: any) => IWebSocketAction<any>): EventHandler<ActionStream, IWebSocketAction<any>>;
 	}
 	export const ACTION_STREAM: ActionStream;
 	export {};
