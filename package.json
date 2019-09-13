@@ -1,8 +1,8 @@
 {
   "name": "reactive-action-transport-client",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "",
-  "main": "index.js",
+  "main": "reactive-action-transport-client.js",
   "scripts": {
     "build": "tsc",
     "test": "mocha --require ts-node/register **/*.spec.ts",
