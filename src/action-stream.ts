@@ -33,6 +33,9 @@ class ActionStream {
     }
 
     dispatch(action: IWebSocketAction<any>): void {
+        if (!action.dispatchOn) {
+            console.warn(`missing dispatchOn property on Action ${action.type}`);
+        }
         // handle the action in the Client
         if (action.dispatchOn === DispatchType.BOTH || action.dispatchOn === DispatchType.CLIENT) {
             debugLog(this._debug, '[reactive-action-transport-client]: invoke stream', action);
