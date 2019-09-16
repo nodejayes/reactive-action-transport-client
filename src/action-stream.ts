@@ -1,6 +1,6 @@
 import {IWebSocketAction} from 'web-socket-action';
 import {Dictionary, EventHandler} from 'ts-tooling';
-import {BACKEND} from './socket';
+import {RAT_BACKEND} from './socket';
 import {DispatchType} from 'reactive-action-transport-data';
 import {debugLog} from "./debug-logger";
 
@@ -19,7 +19,7 @@ class ActionStream {
         });
 
         // Subscribe the Backend Stream to dispatch actions when it was a Action handled by Client
-        BACKEND.MessageStream.Subscribe((sender, action) => {
+        RAT_BACKEND.MessageStream.Subscribe((sender, action) => {
             debugLog(this._debug, '[reactive-action-transport-client]: get action from backend ', action.type);
             if (action.dispatchOn === DispatchType.BOTH || action.dispatchOn === DispatchType.CLIENT) {
                 debugLog(this._debug, '[reactive-action-transport-client]: is client action so it was dispatched ', action.type);
@@ -44,7 +44,7 @@ class ActionStream {
         // Send the Action to the Server when the Action was handled by Server
         if (action.dispatchOn === DispatchType.BOTH || action.dispatchOn === DispatchType.SERVER) {
             debugLog(this._debug, '[reactive-action-transport-client]: send backend', action);
-            BACKEND.Send(action);
+            RAT_BACKEND.Send(action);
         }
     }
 
@@ -58,4 +58,4 @@ class ActionStream {
     }
 }
 
-export const ACTION_STREAM = new ActionStream();
+export const RAT_ACTION_STREAM = new ActionStream();

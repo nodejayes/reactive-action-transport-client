@@ -67,4 +67,4 @@ class BackendSocket {
     }
 }
 
-export const BACKEND = new BackendSocket();
+export const RAT_BACKEND = new BackendSocket();
