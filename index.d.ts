@@ -14,7 +14,7 @@ declare module 'socket' {
 	    Send(data: IWebSocketAction<any>): void;
 	    private connect;
 	}
-	export const BACKEND: BackendSocket;
+	export const RAT_BACKEND: BackendSocket;
 	export {};
 
 }
@@ -29,12 +29,12 @@ declare module 'action-stream' {
 	    dispatch(action: IWebSocketAction<any>): void;
 	    hook(action: new (payload?: any) => IWebSocketAction<any>): EventHandler<ActionStream, IWebSocketAction<any>>;
 	}
-	export const ACTION_STREAM: ActionStream;
+	export const RAT_ACTION_STREAM: ActionStream;
 	export {};
 
 }
 declare module 'reactive-action-transport-client' {
-	export { ACTION_STREAM } from 'action-stream';
-	export { BACKEND } from 'socket';
+	export { RAT_ACTION_STREAM } from 'action-stream';
+	export { RAT_BACKEND } from 'socket';
 
 }
